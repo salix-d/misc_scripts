@@ -32,7 +32,7 @@ def main():
         n = 0
     for key in seqs_dict.keys():
         if(args.standard):
-            tax_line = '>' + '|'.join([taxo_dict[key][-1], key, seqs_dict[key]['name'], 'refs', ';'.join(taxo_dict[key])]) +  '\n'
+            tax_line = '>' + '|'.join([taxo_dict[key][-1], seqs_dict[key]['name'], 'refs', ';'.join(taxo_dict[key])]) +  '\n'
         else :
             tax_line = '>' + ';'.join(taxo_dict[key]) + '\n'
         seq_line = seqs_dict[key]['value'] +  '\n'
@@ -59,7 +59,7 @@ def mk_seqs_dict(seqs_file, seqs_sep, std):
                 key = line[0][1:]
                 keys.append(key)
                 if(std):
-                    names.append(line[1])
+                    names.append(key + '|' + line[1])
             else :
                 key = line.strip()[1:]
                 keys.append(key)
