@@ -77,8 +77,6 @@ def mk_seqs_dict(seqs_file, seqs_sep, std):
 def mk_taxo_dict(taxo_file, lrm):
     taxo_dict = {}
     inputfile = open(taxo_file, "r")
-    levels = [*range(7)] #because it requires 7 taxonomic ranks
-    first_line = True
     lrm = list(map(int, lrm.split()))
     for line in inputfile:
         line = line.strip().split("\t")
