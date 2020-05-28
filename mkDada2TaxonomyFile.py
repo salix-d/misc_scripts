@@ -32,7 +32,7 @@ def main():
         n = 0
     for key in seqs_dict.keys():
         if(args.standard):
-            tax_line = '>' + taxo_dict[key][-1] + '|' + seqs_dict[key]['name'] + '|refs|' + ';'.join(taxo_dict[key]) +  '\n'
+            tax_line = '>' + '|'.join([taxo_dict[key][-1], key, seqs_dict[key]['name'], 'refs', ';'.join(taxo_dict[key])]) +  '\n'
         else :
             tax_line = '>' + ';'.join(taxo_dict[key]) + '\n'
         seq_line = seqs_dict[key]['value'] +  '\n'
@@ -54,21 +54,21 @@ def mk_seqs_dict(seqs_file, seqs_sep, std):
         names = []
     for line in inputfile:
         if ">" in line:
-            if(std):    
-                name = line.strip()[1:]
-                names.append(name)
             if(seqs_sep):
                 line = line.strip().split(seqs_sep)
                 key = line[0][1:]
                 keys.append(key)
+                if(std):
+                    names.append(line[1])
             else :
-                keys.append(line.strip()[1:])
+                key = line.strip()[1:]
+                keys.append(key)
+                names.append(key)
         else :
             values.append(line.strip())
     seqs_dict = {}
     for i in range(len(keys)):
         seqs_dict[keys[i]] = {'value' : values[i]}
-        #seqs_dict[keys[i]]['value'] = value[i]
         if(std) : 
             seqs_dict[keys[i]]['name'] = names[i]
     return seqs_dict
